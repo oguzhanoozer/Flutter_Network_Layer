@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:network_layer/core/network_layer/network_manager.dart';
 import 'package:network_layer/json_place_holder/model/photo_model.dart';
 import 'package:network_layer/json_place_holder/model/user_model.dart';
 import 'package:network_layer/json_place_holder/service/json_place_holder_service.dart';
+
+import '../core/network/service_exception.dart';
 import './json_place_holder.dart';
 
 abstract class jsonPlaceHolderViewModel extends State<jsonPlaceHolder> {
@@ -35,8 +38,9 @@ abstract class jsonPlaceHolderViewModel extends State<jsonPlaceHolder> {
     changeIsLoading();
     try {
       photoList = await _jsonService.getPhotos();
-    } catch (e) {
-      showErrorWidget(e.toString());
+    } on DioError catch (e) {
+      final errorMessage = ServiceException.fromDioError(e).toString();
+      showErrorWidget(errorMessage);
     }
     changeIsLoading();
   }
@@ -45,8 +49,9 @@ abstract class jsonPlaceHolderViewModel extends State<jsonPlaceHolder> {
     changeIsLoading();
     try {
       usersList = await _jsonService.getUsers();
-    } catch (e) {
-      showErrorWidget(e.toString());
+    } on DioError catch (e) {
+      final errorMessage = ServiceException.fromDioError(e).toString();
+      showErrorWidget(errorMessage);
     }
     changeIsLoading();
   }

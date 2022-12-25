@@ -14,7 +14,9 @@ class NetworkManager {
   final _baseUrl = "https://jsonplaceholder.typicode.com/";
 
   NetworkManager._init() {
-    dio = Dio(BaseOptions(baseUrl: _baseUrl));
+    dio = Dio(BaseOptions(
+      baseUrl: _baseUrl,
+    ));
   }
 }
 
